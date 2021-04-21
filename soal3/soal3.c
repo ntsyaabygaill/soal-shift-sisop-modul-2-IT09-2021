@@ -9,51 +9,19 @@
 #include <syslog.h>
 #include <string.h>
 #include <time.h>
+#include <signal.h>
+#include <wait.h>
 
-void makeFile(char* args) // MAKING KILLER FILE!
-{
-  int i;
-  FILE *fp; //file pointer
+int mysignal = 1 ;
 
-  if(strcmp(args, "-z") == 0) // DIRECTLY KILL THE FUCKING PROGRAM A.K.A. SIGKILL
-  {
-    fp = fopen("KILLTHEMALL.sh", "w"); //w -> write
-    char str[] = "killall -SIGKILL soal22; rm KILLTHEMALL.sh;\n";
-    for (i = 0; str[i] != '\n'; i++)
-    {
-      /* write to file using fputc() function */
-      fputc(str[i], fp);
-    }
-    fclose(fp);
-  }
-  else if(strcmp(args, "-x") == 0) // SIGSTOP
-  {
-    fp = fopen("KILLTHEMALL.sh", "w"); //w -> write
-    char str[] = "killall -SIGCHLD soal22; rm KILLTHEMALL.sh;\n";
-    for (i = 0; str[i] != '\n'; i++)
-    {
-      /* write to file using fputc() function */
-      fputc(str[i], fp);
-    }
-    fclose(fp);
-  }
-  else // WRONG ARGS
-  {
-    printf("MODE not found. Please try again.\n");
-    exit(EXIT_FAILURE);
-  }
+void custom_signal_x(int signum) {
+    mysignal = 0 ;
+}
 
-  pid_t anjay;
-  anjay = fork();
-  if (anjay < 0)
-  {
-    exit(EXIT_FAILURE);
-  }
-  if (anjay == 0)
-  {
-    char *chmod[4] = {"chmod", "+x", "KILLTHEMALL.sh", NULL};
-    execv("/bin/chmod", chmod);
-  }
+void make_program(char b[]) {
+    FILE* src = fopen("killer.sh", "w") ;
+    fputs(b, src) ;
+    fclose(src) ;
 }
 
 char* format_time()
@@ -103,17 +71,27 @@ int main(int argc,char* argv[]) //supaya dapat passing arguments
     exit(EXIT_FAILURE);
   }
 
-  if(argc > 2) // if user enter too many arguments
-  {
-    printf("Too much arguments! Try running the program again.\n");
-    exit(EXIT_FAILURE);
-  }
-
-  char args[5];
-
-  strcpy(args, argv[1]);
-
-  makeFile(args);
+if (argc > 2) {
+        return 0 ;
+    }
+    else if (argc == 2) {
+        char b[80] ;
+        if (!strcmp(argv[1], "-z")) {
+            strcpy(b, "#!/bin/bash\nkillall -9 ./soal3\nrm $0\n") ;
+            make_program(b) ;
+        }
+        else if (!strcmp(argv[1], "-x")) {
+            strcpy(b, "#!/bin/bash\nkillall -15 ./soal3\nrm $0\n") ;
+            make_program(b) ;
+            signal(SIGTERM, custom_signal_x) ;
+        }
+        else {
+            return 0 ;
+        }
+    }
+    else {
+        return 0 ;
+    }
 
   pid_t pid, sid;        // Variabel untuk menyimpan PID
 
@@ -153,13 +131,12 @@ int main(int argc,char* argv[]) //supaya dapat passing arguments
   close(STDOUT_FILENO);
   close(STDERR_FILENO);
 
-  while (1)
+  while (mysignal)
   {
     pid_t child_proc;
     child_proc = fork();
 
     time_t n = time(NULL); // getting local time
-    long int ukurangambar = (n % 1000) + 50;
     struct tm tm = *localtime(&n);
     char datestr[50];
     sprintf(datestr, "%d-%02d-%02d_%02d:%02d:%02d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
@@ -169,11 +146,11 @@ int main(int argc,char* argv[]) //supaya dapat passing arguments
     strcat(lokasidownload, "/");
     strcat(lokasidownload, datestr);
 
-    char linkdownload[100]; //link download
-    strcpy(linkdownload, "https://picsum.photos/");
-    char ukurangambarstr[50];
-    sprintf(ukurangambarstr, "%ld", ukurangambar);
-    strcat(linkdownload, ukurangambarstr);
+    char linkdownload[80] = "https://picsum.photos/" ;
+    int picsize = (n % 1000) + 50 ;
+    char num[10] ;
+    sprintf(num, "%d", picsize) ;
+    strcat(linkdownload, num) ;
 
     char namazip[50];
     strcpy(namazip, datestr);
@@ -200,10 +177,9 @@ int main(int argc,char* argv[]) //supaya dapat passing arguments
           if(download == 0)
           {
             char* namafile = format_time();
-            //char *wget[7] = {"wget", "-P", lokasidownload, "-O", namafile, linkdownload, NULL};
-            char *wget[] = {"wget", "-O", namafile, linkdownload, NULL};
+            char *wget[] = {"wget", "-q", "-O", namafile, linkdownload, NULL};
             chdir (lokasidownload);
-            execl("/usr/bin/wget", "wget", "-O", namafile, linkdownload, NULL);
+            execv("/bin/wget", wget) ;
           }
           i++;
           sleep(5);
@@ -239,7 +215,5 @@ int main(int argc,char* argv[]) //supaya dapat passing arguments
       
       sleep(40);
     }
-
-    
   }
 }
