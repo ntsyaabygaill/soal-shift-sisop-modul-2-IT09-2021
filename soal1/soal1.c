@@ -12,46 +12,38 @@
 
 int main(){
 
-    // declare variable
     pid_t pid, sid;     
-    char tanggal[100]; 
+    char date[100]; 
     time_t rawDate;
     struct tm *localDate;
     int status;
     pid_t cid = fork();
     pid = fork();   
 
-    // jika fork gagal
     if (pid < 0) {
         exit(EXIT_FAILURE);
     }
 
-    // jika fork berhasil
     if (pid > 0) {
         exit(EXIT_SUCCESS);
     }
 
-    // file permission
     umask(0);
 
-    // set unique id
     sid = setsid();
     if (sid < 0) {
         exit(EXIT_FAILURE);
     }
 
-    //close file descriptor standar
     close(STDIN_FILENO);
     close(STDOUT_FILENO);
     close(STDERR_FILENO);
 
     while (1) {
-
-        //trigger untuk sudo date
         rawDate = time(NULL);
         localDate = localtime(&rawDate);
-        strftime(tanggal, 50, "%Y-%m-%d %H:%M:%S", localDate);
-        if(strcmp(tanggal,"2021-04-09 16:22:00") == 0){
+        strftime(date, 50, "%Y-%m-%d %H:%M:%S", localDate);
+        if(strcmp(date,"2021-04-09 16:22:00") == 0){
 
             if (cid == 0) {
                 char *argv[] = {"mkdir", "-p", "Pyoto", NULL};
@@ -59,7 +51,6 @@ int main(){
             }
             else 
             {
-            // membuat folder
                 cid = fork();
                 if (cid == 0) {
                     char *argv[] = {"mkdir", "-p", "Musyik", NULL};
@@ -74,7 +65,6 @@ int main(){
                 }
                 while(wait(NULL) != cid);
 
-            // download file dari Google drive
                 cid = fork();
                 if (cid == 0) {
                     char *argv[] = {"wget","--no-check-certificate", "-q", "https://drive.google.com/uc?id=1FsrAzb9B5ixooGUs0dGiBr-rC7TS9wTD&export=download", "-O", "Foto_for_Stevany.zip", NULL};
@@ -96,7 +86,6 @@ int main(){
                 }
                 while(wait(NULL) != cid);
 
-            // unzip file yang telah di download
                 cid = fork();
                 if (cid == 0) {
                     char *argv[] = {"unzip", "-q", "Foto_for_Stevany.zip", NULL};
@@ -118,7 +107,6 @@ int main(){
                 }
                 while(wait(NULL) != cid);
 
-            // delete folder yang sudah ada
                 cid = fork();
                 if (cid == 0) {
                     char *argv[] = {"rm", "-r", "Pyoto", "Fylm", "Musyik", NULL};
@@ -126,8 +114,6 @@ int main(){
                 }
                 while(wait(NULL) != cid);
 
-
-            // pindahkan dan rename file
                 cid = fork();
                 if (cid == 0) {
                     char *argv[] = {"mv", "FOTO", "Pyoto", NULL};
@@ -150,21 +136,17 @@ int main(){
                 }
                 while(wait(NULL) != cid);
 
-            }            
-
+            }
             break;
-
-        }
-        
+        } 
     }
 
     while (1) {
 
-        //trigger date
         rawDate = time(NULL);
         localDate = localtime(&rawDate);
-        strftime(tanggal, 50, "%Y-%m-%d %H:%M:%S", localDate);
-        if(strcmp(tanggal,"2021-04-09 22:22:00") == 0){
+        strftime(date, 50, "%Y-%m-%d %H:%M:%S", localDate);
+        if(strcmp(date,"2021-04-09 22:22:00") == 0){
 
             cid = fork();
             if (cid == 0) {
@@ -173,7 +155,6 @@ int main(){
             }
             else{
 
-                // tunggu proses diatas selesai, baru hapus semua
                 while ((wait(&status)) > 0);
 
                 cid = fork();
@@ -184,12 +165,7 @@ int main(){
                 while(wait(NULL) != cid);
 
             }
-
             break;
-
         }
-    
     }
-  
-
 }
