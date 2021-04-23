@@ -491,7 +491,20 @@ int main()
 }
 ```
 Namun terjadi kendala pada fungsi waktu yang tidak berjalan, sehingga kamu membuat dalam setiap percabangan variabel seconds dan seconds2 kurang dari 0, dimana seharusnya sama dengan 0. Lalu kami mencoba memasukkan code ini ke daemon, namun ubuntu yang kami gunakan mengalami freeze kemudian black screen. Sehingga kami mencoba membuat code langsung di daemon seperti diatas, dengan penjelasan masing-masing fungsi sebagai berikut :
-1. Library yang kami gunakan
+1. Library yang kami gunakan <br/> 
+```C
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <unistd.h>
+#include <syslog.h>
+#include <string.h>
+#include <wait.h>
+#include <time.h>
+```
 2. Inisialiasi variabel
 3. Membandingkan waktu
 4. Membuat directory Pyoto
