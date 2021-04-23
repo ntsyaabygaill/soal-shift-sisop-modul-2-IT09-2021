@@ -516,15 +516,15 @@ pid_t cid = fork();
 pid = fork();
 ```
 4. Membandingkan waktu
-```
+``` C
 rawDate = time(NULL);
 localDate = localtime(&rawDate);
 strftime(date, 50, "%Y-%m-%d %H:%M:%S", localDate);
-```
-```
+``` 
+``` C
 if(strcmp(date,"2021-04-09 16:22:00") == 0)
 ```
-```
+``` C
 if(strcmp(date,"2021-04-09 22:22:00") == 0)
 ```
 6. Membuat directory Pyoto
