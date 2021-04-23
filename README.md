@@ -490,7 +490,8 @@ int main()
 
 }
 ```
-Namun terjadi kendala pada fungsi waktu yang tidak berjalan, sehingga kamu membuat dalam setiap percabangan variabel seconds dan seconds2 kurang dari 0, dimana seharusnya sama dengan 0.
+Namun terjadi kendala pada fungsi waktu yang tidak berjalan, sehingga kamu membuat dalam setiap percabangan variabel seconds dan seconds2 kurang dari 0, dimana seharusnya sama dengan 0. Lalu kami mencoba memasukkan code ini ke daemon, namun ubuntu yang kami gunakan mengalami freeze kemudian black screen. Sehingga kami mencoba membuat code langsung di daemon seperti diatas, dengan penjelasan masing-masing fungsi sebagai berikut :
+
 
 ## Nomor 2 :
 ## Nomor 3 :
