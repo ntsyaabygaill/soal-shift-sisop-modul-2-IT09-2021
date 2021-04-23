@@ -86,9 +86,7 @@ void copy(char *src, char *dest, char *lokasi, char *nama)
     char *argv[] = {"cp", src, dest, NULL};
     execv("/bin/cp", argv);
   }
-  // copy(src, dest, src2, file2);
-  //pindah(src2, dest, file2);
-  //void pindah(char *lokasi, char *file, char *nama)
+
   while ((waitpid(child, &status, 0)) > 0)
     ;
   pid_t child2 = fork();
@@ -238,16 +236,11 @@ int main()
             strcat(src, str);
             strcat(dest, file2);
             strcat(src2, folder2);
-            //src=/home/juned/modul2/petshop/cat;joni;6_dog;daisy;9.jpg
-            //dest=/home/juned/modul2/petshop/
-            //src2=/home/juned/modul2/petshop/dog
-            //file2=dog;daisy;9.jpg
+
             copy(src, dest, src2, file2);
-            //pindah(src2, dest, file2);
+
           }
-          //lokasi=/home/juned/modul2/petshop/cat
-          //src=/home/juned/modul2/petshop/cat;joni;6.jpg
-          //d_name=cat;joni;6.jpg
+
           pindah(lokasi, file, ep->d_name);
         }
       }
