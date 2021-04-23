@@ -506,21 +506,41 @@ Namun terjadi kendala pada fungsi waktu yang tidak berjalan, sehingga kamu membu
 #include <time.h>
 ```
 2. Inisialiasi variabel
-3. Membandingkan waktu
-4. Membuat directory Pyoto
-5. Membuat directory Musyik
-6. Membuat directory Fylm
-7. Mendownload Zip Foto
-8. Mendownload Zip Musik
-9. Mendownload Zip Film
-10. Unzip Foto
-11. Unzip Musik
-12. Unzip Film
-13. Memindah Foto ke Pyoto
-14. Memindah Musik ke Musyik
-15. Memindah Film ke Fylm
-16. Zip Pyoto, Musyik, Fylm ke Lopyu_Stevany.zip
-17. Menghapus Folder yang tidak perlu
+```
+pid_t pid, sid;     
+char date[100]; 
+time_t rawDate;
+struct tm *localDate;
+int status;
+pid_t cid = fork();
+pid = fork();
+```
+4. Membandingkan waktu
+```
+rawDate = time(NULL);
+localDate = localtime(&rawDate);
+strftime(date, 50, "%Y-%m-%d %H:%M:%S", localDate);
+```
+```
+if(strcmp(date,"2021-04-09 16:22:00") == 0)
+```
+```
+if(strcmp(date,"2021-04-09 22:22:00") == 0)
+```
+6. Membuat directory Pyoto
+7. Membuat directory Musyik
+8. Membuat directory Fylm
+9. Mendownload Zip Foto
+10. Mendownload Zip Musik
+11. Mendownload Zip Film
+12. Unzip Foto
+13. Unzip Musik
+14. Unzip Film
+15. Memindah Foto ke Pyoto
+16. Memindah Musik ke Musyik
+17. Memindah Film ke Fylm
+18. Zip Pyoto, Musyik, Fylm ke Lopyu_Stevany.zip
+19. Menghapus Folder yang tidak perlu
 
 ## Nomor 2 :
 ## Nomor 3 :
