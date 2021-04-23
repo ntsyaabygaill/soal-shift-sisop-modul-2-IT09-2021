@@ -491,7 +491,23 @@ int main()
 }
 ```
 Namun terjadi kendala pada fungsi waktu yang tidak berjalan, sehingga kamu membuat dalam setiap percabangan variabel seconds dan seconds2 kurang dari 0, dimana seharusnya sama dengan 0. Lalu kami mencoba memasukkan code ini ke daemon, namun ubuntu yang kami gunakan mengalami freeze kemudian black screen. Sehingga kami mencoba membuat code langsung di daemon seperti diatas, dengan penjelasan masing-masing fungsi sebagai berikut :
-
+1. Library yang kami gunakan
+2. Inisialiasi variabel
+3. Membandingkan waktu
+4. Membuat directory Pyoto
+5. Membuat directory Musyik
+6. Membuat directory Fylm
+7. Mendownload Zip Foto
+8. Mendownload Zip Musik
+9. Mendownload Zip Film
+10. Unzip Foto
+11. Unzip Musik
+12. Unzip Film
+13. Memindah Foto ke Pyoto
+14. Memindah Musik ke Musyik
+15. Memindah Film ke Fylm
+16. Zip Pyoto, Musyik, Fylm ke Lopyu_Stevany.zip
+17. Menghapus Folder yang tidak perlu
 
 ## Nomor 2 :
 ## Nomor 3 :
