@@ -5,8 +5,8 @@
 <br/> -. Natasya Abygail N (05311940000020)
 <br/> -. Muhammad Naufal Imantyasto (05311940000041)
 
-### Nomor 1 :
-#### Soal :
+## Nomor 1 :
+### Soal :
 Pada suatu masa, hiduplah seorang Steven yang hidupnya pas-pasan. Steven punya pacar, namun sudah putus sebelum pacaran. Ketika dia galau memikirkan mantan, ia selalu menonton https://www.youtube.com/watch?v=568DH_9CMKI untuk menghilangkan kesedihannya. 
 
 Di lain hal Steven anak yang tidak amat sangat super membenci matkul sisop, beberapa jam setelah diputus oleh pacarnya dia menemukan wanita lain bernama Stevany, namun Stevany berkebalikan dengan Steven karena menyukai sisop. Steven ingin terlihat jago matkul sisop demi menarik perhatian Stevany.
