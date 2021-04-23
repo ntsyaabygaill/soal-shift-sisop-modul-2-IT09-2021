@@ -17,7 +17,7 @@ Pada hari ulang tahun Stevany, Steven ingin memberikan Stevany zip berisikan hal
 Kemudian Steven meminta bantuanmu yang memang sudah jago sisop untuk membantunya mendapatkan hati Stevany. Bantu Woy!!
 ### Source Code :
 Berikut adalah source code yang kami buat :
-```
+```C
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdio.h>
@@ -190,6 +190,7 @@ int main(){
     }
 }
 ```
+### Cara Pengerjaan
 
 ## Nomor 2 :
 ## Nomor 3 :
