@@ -506,7 +506,7 @@ Namun terjadi kendala pada fungsi waktu yang tidak berjalan, sehingga kamu membu
 #include <time.h>
 ```
 2. Inisialiasi variabel
-```
+``` C
 pid_t pid, sid;     
 char date[100]; 
 time_t rawDate;
@@ -528,19 +528,144 @@ if(strcmp(date,"2021-04-09 16:22:00") == 0)
 if(strcmp(date,"2021-04-09 22:22:00") == 0)
 ```
 6. Membuat directory Pyoto
-7. Membuat directory Musyik
-8. Membuat directory Fylm
-9. Mendownload Zip Foto
-10. Mendownload Zip Musik
-11. Mendownload Zip Film
-12. Unzip Foto
-13. Unzip Musik
-14. Unzip Film
-15. Memindah Foto ke Pyoto
-16. Memindah Musik ke Musyik
-17. Memindah Film ke Fylm
-18. Zip Pyoto, Musyik, Fylm ke Lopyu_Stevany.zip
-19. Menghapus Folder yang tidak perlu
+``` C
+if (cid == 0) {
+    char *argv[] = {"mkdir", "-p", "Pyoto", NULL};
+    execv("/bin/mkdir", argv);    
+}
+```
+8. Membuat directory Musyik
+``` C
+else 
+{
+    cid = fork();
+    if (cid == 0) {
+    char *argv[] = {"mkdir", "-p", "Musyik", NULL};
+    execv("/bin/mkdir", argv);                  
+}
+```
+10. Membuat directory Fylm
+``` C
+while(wait(NULL) != cid);
 
+cid = fork();
+if (cid == 0) {                    
+    char *argv[] = {"mkdir", "-p", "Fylm", NULL};
+    execv("/bin/mkdir", argv);           
+}
+```
+12. Mendownload Zip Foto
+``` C
+while(wait(NULL) != cid);
+
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"wget","--no-check-certificate", "-q", "https://drive.google.com/uc?id=1FsrAzb9B5ixooGUs0dGiBr-rC7TS9wTD&export=download", "-O", "Foto_for_Stevany.zip", NULL};
+    execv("/usr/bin/wget", argv);                   
+}
+```
+14. Mendownload Zip Musik
+``` C
+while(wait(NULL) != cid);
+
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"wget","--no-check-certificate", "-q", "https://drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J&export=download", "-O", "Musik_for_Stevany.zip", NULL};                    
+    execv("/usr/bin/wget", argv);
+}
+```
+16. Mendownload Zip Film
+``` C
+while(wait(NULL) != cid);
+
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"wget","--no-check-certificate", "-q", "https://drive.google.com/uc?id=1ktjGgDkL0nNpY-vT7rT7O6ZI47Ke9xcp&export=download", "-O", "Film_for_Stevany.zip", NULL};                    
+    execv("/usr/bin/wget", argv);
+}
+```
+18. Unzip Foto
+``` C
+while(wait(NULL) != cid);
+
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"unzip", "-q", "Foto_for_Stevany.zip", NULL};
+    execv("/usr/bin/unzip", argv);
+}
+```
+20. Unzip Musik
+``` C
+while(wait(NULL) != cid);
+
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"unzip", "-q", "Musik_for_Stevany.zip", NULL};
+    execv("/usr/bin/unzip", argv);
+}
+```
+22. Unzip Film
+``` C
+while(wait(NULL) != cid);
+
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"unzip", "-q", "Film_for_Stevany.zip", NULL};
+    execv("/usr/bin/unzip", argv);
+}
+```
+24. Memindah Foto ke Pyoto
+``` C
+while(wait(NULL) != cid);
+
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"mv", "FOTO", "Pyoto", NULL};
+    execv("/bin/mv", argv); 
+}
+
+```
+26. Memindah Musik ke Musyik
+``` C
+while(wait(NULL) != cid);
+
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"mv", "MUSIK", "Musyik", NULL};
+    execv("/bin/mv", argv); 
+}
+```
+28. Memindah Film ke Fylm
+``` C
+while(wait(NULL) != cid);
+
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"mv", "FILM", "Fylm", NULL};
+    execv("/bin/mv", argv);
+}
+```
+Setelah fungsi ini kami menambahkan break untuk menghentikan loop yang pertama.
+30. Zip Pyoto, Musyik, Fylm ke Lopyu_Stevany.zip
+``` C
+if (cid == 0) {
+    char *argv[] = {"zip", "-r", "Lopyu_Stevany.zip", "Pyoto", "Musyik", "Fylm", NULL};
+    execv("/usr/bin/zip", argv);
+}
+```
+32. Menghapus Folder yang tidak perlu
+``` C
+else{
+
+while ((wait(&status)) > 0);
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"rm", "-r", "FILM", "FOTO", "MUSIK", "Pyoto", "Fylm", "Musyik", NULL};
+    execv("/bin/rm", argv);
+}
+while(wait(NULL) != cid);
+}
+```
+Setelah fungsi ini kami menambahkan break untuk menghentikan loop yang kedua.
 ## Nomor 2 :
 ## Nomor 3 :
