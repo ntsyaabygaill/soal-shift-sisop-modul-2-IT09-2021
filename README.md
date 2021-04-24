@@ -771,8 +771,7 @@ void copy(char *src, char *dest, char *lokasi, char *nama)
     execv("/bin/cp", argv);
   }
 
-  while ((waitpid(child, &status, 0)) > 0)
-    ;
+  while ((waitpid(child, &status, 0)) > 0);
   pid_t child2 = fork();
   if (child2 == 0)
   {
