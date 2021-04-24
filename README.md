@@ -190,7 +190,7 @@ int main(){
     }
 }
 ```
-### Cara Pengerjaan dan Kendala
+### Cara Pengerjaan dan Kendala :
 Pertama-tama kami mencoba untuk menulis program secara langsung (tidak menggunakan daemon) sebagai berikut :
 ``` C
 #include <stdio.h>
@@ -667,5 +667,13 @@ while(wait(NULL) != cid);
 }
 ```
 Setelah fungsi ini kami menambahkan break untuk menghentikan loop yang kedua.
+
 ## Nomor 2 :
+### Soal :
+### Source Code :
+### Cara Pengerjaan dan Kendala :
+
 ## Nomor 3 :
+### Soal :
+### Source Code :
+### Cara Pengerjaan dan Kendala :
