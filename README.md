@@ -7,12 +7,12 @@
 
 ## Nomor 1 :
 ### Soal :
-(a) Menamai folder dengan Musyik untuk mp3, Fylm untuk mp4, dan Pyoto untuk jpg.
-(b) Mendownload file dari link yang tersedia.
-(c) Extract zip setelah download
-(d) Memindahkan file ke dalam folder yang telah dibuat.
-(e) Poin a-d berjalan otomatis 6 jam sebelum waktu ulang tahun Stevany. 
-(f) Pada waktu ulang tahunnya Stevany, semua folder akan di zip dengan nama Lopyu_Stevany.zip dan semua folder akan di delete.
+(a) Menamai folder dengan Musyik untuk mp3, Fylm untuk mp4, dan Pyoto untuk jpg. <br/>
+(b) Mendownload file dari link yang tersedia.<br/>
+(c) Extract zip setelah download<br/>
+(d) Memindahkan file ke dalam folder yang telah dibuat.<br/>
+(e) Poin a-d berjalan otomatis 6 jam sebelum waktu ulang tahun Stevany. <br/>
+(f) Pada waktu ulang tahunnya Stevany, semua folder akan di zip dengan nama Lopyu_Stevany.zip dan semua folder akan di delete.<br/>
 
 ### Source Code :
 Berikut adalah source code yang kami buat :
