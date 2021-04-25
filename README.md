@@ -1435,14 +1435,173 @@ void custom_signal_x(int signum) {
 }
 ```
 2. Fungsi make program
+``` C
+void make_program(char b[]) {
+    FILE* src = fopen("killer.sh", "w") ;
+    fputs(b, src) ;
+    fclose(src) ;
+}
+```
 3. Fungsi format time
+``` C
+char* format_time()
+{
+    char* output;
+    time_t rawtime;
+    struct tm * timeinfo;
+
+    time ( &rawtime );
+    timeinfo = localtime ( &rawtime );
+
+    sprintf(output, "[%d-%d-%d_%d:%d:%d]",timeinfo->tm_year + 1900, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+    return output;
+}
+```
 4. Fungsi cipher
+``` C
+char message[100]="Download Success", ch;
+int i;
+
+for(i = 0; message[i] != '\0'; ++i){
+    ch = message[i];
+    
+    if(ch >= 'a' && ch <= 'z'){
+        ch = ch + 5;
+        
+        if(ch > 'z'){
+            ch = ch - 'z' + 'a' - 1;
+        }
+        
+        message[i] = ch;
+    }
+    else if(ch >= 'A' && ch <= 'Z'){
+        ch = ch + 5;
+        
+        if(ch > 'Z'){
+            ch = ch - 'Z' + 'A' - 1;
+        }
+        
+        message[i] = ch;
+    }
+}
+```
 5. Membuat program killer
+``` C
+if(argc == 1) // if user doesn't enter any arguments
+{
+printf("Enter the program mode! Try running the program again.\n");
+exit(EXIT_FAILURE);
+}
+
+if (argc > 2) {
+    return 0 ;
+}
+else if (argc == 2) {
+    char b[80] ;
+    if (!strcmp(argv[1], "-z")) {
+        strcpy(b, "#!/bin/bash\nkillall -9 ./soal3\nrm $0\n") ;
+        make_program(b) ;
+    }
+    else if (!strcmp(argv[1], "-x")) {
+        strcpy(b, "#!/bin/bash\nkillall -15 ./soal3\nrm $0\n") ;
+        make_program(b) ;
+        signal(SIGTERM, custom_signal_x) ;
+    }
+    else {
+        return 0 ;
+    }
+}
+else {
+    return 0 ;
+}
+```
 6. Mendapatkan timestamp
-7. Mendapatkan lokasi download
-8. Mendapatkan link download
-9. Memberi nama zip
-10. Mendownload file
-11. Memasukkan status.txt
-12. Melakukan zipping directory
-13. Membuat directory
+``` C
+time_t n = time(NULL); // getting local time
+struct tm tm = *localtime(&n);
+char datestr[50];
+sprintf(datestr, "%d-%02d-%02d_%02d:%02d:%02d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+```
+8. Mendapatkan lokasi download
+``` C
+char lokasidownload[100]; //lokasi download
+strcpy(lokasidownload, cwd);
+strcat(lokasidownload, "/");
+strcat(lokasidownload, datestr);
+```
+9. Mendapatkan link download
+``` C
+char linkdownload[80] = "https://picsum.photos/" ;
+int picsize = (n % 1000) + 50 ;
+char num[10] ;
+sprintf(num, "%d", picsize) ;
+strcat(linkdownload, num) ;
+```
+10. Memberi nama zip
+``` C
+char namazip[50];
+strcpy(namazip, datestr);
+strcat(namazip, ".zip");
+```
+11. Mendownload file
+``` C
+while(i < 10) //Download per 5 detik
+{
+    pid_t download;
+    download = fork();
+
+    if(download < 0)
+    {
+        exit(EXIT_FAILURE);
+    }
+
+    if(download == 0)
+    {
+        char* namafile = format_time();
+        char *wget[] = {"wget", "-q", "-O", namafile, linkdownload, NULL};
+        chdir (lokasidownload);
+        execv("/bin/wget", wget) ;
+    }
+    i++;
+    sleep(5);
+}
+```
+13. Memasukkan status.txt
+``` C
+chdir(lokasidownload);
+FILE *fp;
+fp = fopen("status.txt", "w"); //w -> writE
+fputs(message, fp);
+fclose(fp);
+```
+14. Melakukan zipping directory
+``` C
+char directory[200];
+chdir(cwd);
+char *zip[6] = {"zip", "-m", "-r", namazip, datestr, NULL};
+execvp("zip", zip);
+sleep(1);
+```
+15. Membuat directory
+``` C
+else // make new folder stiap 40s -> parent
+{
+
+pid_t makeDir;
+    makeDir = fork();
+
+    if(makeDir < 0)
+    {
+    exit(EXIT_FAILURE);
+    }
+
+    if(makeDir == 0)
+    {
+    char *mkdir[3] = {"mkdir", lokasidownload, NULL};
+
+    execv("/bin/mkdir", mkdir);
+    }
+
+sleep(40);
+}
+```
