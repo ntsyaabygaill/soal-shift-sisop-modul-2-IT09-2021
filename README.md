@@ -1427,6 +1427,13 @@ if (argc > 2) {
 ### Cara Pengerjaan dan Kendala :
 Berikut adalah fungsi yang kami gunakan :
 1. Fungsi custom signal
+``` C
+int mysignal = 1 ;
+
+void custom_signal_x(int signum) {
+    mysignal = 0 ;
+}
+```
 2. Fungsi make program
 3. Fungsi format time
 4. Fungsi cipher
