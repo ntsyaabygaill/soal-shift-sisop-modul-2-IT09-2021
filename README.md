@@ -1302,11 +1302,11 @@ Berikut adalah hasil run dari program kami <br/>
 ## Nomor 3 :
 ### Soal :
 Ranora adalah mahasiswa Teknik Informatika yang saat ini sedang menjalani magang di perusahan ternama yang bernama “FakeKos Corp.”, perusahaan yang bergerak dibidang keamanan data. Karena Ranora masih magang, maka beban tugasnya tidak sebesar beban tugas pekerja tetap perusahaan. Di hari pertama Ranora bekerja, pembimbing magang Ranora memberi tugas pertamanya untuk membuat sebuah program.
-Ranora harus membuat sebuah program C yang dimana setiap 40 detik membuat sebuah direktori dengan nama sesuai timestamp [YYYY-mm-dd_HH:ii:ss].
-Setiap direktori yang sudah dibuat diisi dengan 10 gambar yang didownload dari https://picsum.photos/, dimana setiap gambar akan didownload setiap 5 detik. Setiap gambar yang didownload akan diberi nama dengan format timestamp [YYYY-mm-dd_HH:ii:ss] dan gambar tersebut berbentuk persegi dengan ukuran (n%1000) + 50 pixel dimana n adalah detik Epoch Unix.
-Setelah direktori telah terisi dengan 10 gambar, program tersebut akan membuat sebuah file “status.txt”, dimana didalamnya berisi pesan “Download Success” yang terenkripsi dengan teknik Caesar Cipher dan dengan shift 5. Caesar Cipher adalah Teknik enkripsi sederhana yang dimana dapat melakukan enkripsi string sesuai dengan shift/key yang kita tentukan. Misal huruf “A” akan dienkripsi dengan shift 4 maka akan menjadi “E”. Karena Ranora orangnya perfeksionis dan rapi, dia ingin setelah file tersebut dibuat, direktori akan di zip dan direktori akan didelete, sehingga menyisakan hanya file zip saja.
-Untuk mempermudah pengendalian program, pembimbing magang Ranora ingin program tersebut akan men-generate sebuah program “Killer” yang executable, dimana program tersebut akan menterminasi semua proses program yang sedang berjalan dan akan menghapus dirinya sendiri setelah program dijalankan. Karena Ranora menyukai sesuatu hal yang baru, maka Ranora memiliki ide untuk program “Killer” yang dibuat nantinya harus merupakan program bash.
-Pembimbing magang Ranora juga ingin nantinya program utama yang dibuat Ranora dapat dijalankan di dalam dua mode. Untuk mengaktifkan mode pertama, program harus dijalankan dsdengan argumen -z, dan Ketika dijalankan dalam mode pertama, program utama akan langsung menghentikan semua operasinya Ketika program Killer dijalankan. Sedangkan untuk mengaktifkan mode kedua, program harus dijalankan dengan argumen -x, dan Ketika dijalankan dalam mode kedua, program utama akan berhenti namun membiarkan proses di setiap direktori yang masih berjalan hingga selesai (Direktori yang sudah dibuat akan mendownload gambar sampai selesai dan membuat file txt, lalu zip dan delete direktori).
+A. Ranora harus membuat sebuah program C yang dimana setiap 40 detik membuat sebuah direktori dengan nama sesuai timestamp [YYYY-mm-dd_HH:ii:ss].
+B. Setiap direktori yang sudah dibuat diisi dengan 10 gambar yang didownload dari https://picsum.photos/, dimana setiap gambar akan didownload setiap 5 detik. Setiap gambar yang didownload akan diberi nama dengan format timestamp [YYYY-mm-dd_HH:ii:ss] dan gambar tersebut berbentuk persegi dengan ukuran (n%1000) + 50 pixel dimana n adalah detik Epoch Unix.
+C. Setelah direktori telah terisi dengan 10 gambar, program tersebut akan membuat sebuah file “status.txt”, dimana didalamnya berisi pesan “Download Success” yang terenkripsi dengan teknik Caesar Cipher dan dengan shift 5. Caesar Cipher adalah Teknik enkripsi sederhana yang dimana dapat melakukan enkripsi string sesuai dengan shift/key yang kita tentukan. Misal huruf “A” akan dienkripsi dengan shift 4 maka akan menjadi “E”. Karena Ranora orangnya perfeksionis dan rapi, dia ingin setelah file tersebut dibuat, direktori akan di zip dan direktori akan didelete, sehingga menyisakan hanya file zip saja.
+D. Untuk mempermudah pengendalian program, pembimbing magang Ranora ingin program tersebut akan men-generate sebuah program “Killer” yang executable, dimana program tersebut akan menterminasi semua proses program yang sedang berjalan dan akan menghapus dirinya sendiri setelah program dijalankan. Karena Ranora menyukai sesuatu hal yang baru, maka Ranora memiliki ide untuk program “Killer” yang dibuat nantinya harus merupakan program bash.
+E. Pembimbing magang Ranora juga ingin nantinya program utama yang dibuat Ranora dapat dijalankan di dalam dua mode. Untuk mengaktifkan mode pertama, program harus dijalankan dsdengan argumen -z, dan Ketika dijalankan dalam mode pertama, program utama akan langsung menghentikan semua operasinya Ketika program Killer dijalankan. Sedangkan untuk mengaktifkan mode kedua, program harus dijalankan dengan argumen -x, dan Ketika dijalankan dalam mode kedua, program utama akan berhenti namun membiarkan proses di setiap direktori yang masih berjalan hingga selesai (Direktori yang sudah dibuat akan mendownload gambar sampai selesai dan membuat file txt, lalu zip dan delete direktori).
 Ranora meminta bantuanmu untuk membantunya dalam membuat program tersebut. Karena kamu anak baik dan rajin menabung, bantulah Ranora dalam membuat program tersebut!
 Note:
 Tidak boleh menggunakan system() dan mkdir()
@@ -1357,30 +1357,30 @@ char* format_time()
 int main(int argc,char* argv[]) //supaya dapat passing arguments
 { 
   char message[100]="Download Success", ch;
-	int i;
-	
-	for(i = 0; message[i] != '\0'; ++i){
-		ch = message[i];
-		
-		if(ch >= 'a' && ch <= 'z'){
-			ch = ch + 4;
-			
-			if(ch > 'z'){
-				ch = ch - 'z' + 'a' - 1;
-			}
-			
-			message[i] = ch;
-		}
-		else if(ch >= 'A' && ch <= 'Z'){
-			ch = ch + 4;
-			
-			if(ch > 'Z'){
-				ch = ch - 'Z' + 'A' - 1;
-			}
-			
-			message[i] = ch;
-		}
-	}
+ int i;
+ 
+ for(i = 0; message[i] != '\0'; ++i){
+  ch = message[i];
+  
+  if(ch >= 'a' && ch <= 'z'){
+   ch = ch + 4;
+   
+   if(ch > 'z'){
+    ch = ch - 'z' + 'a' - 1;
+   }
+   
+   message[i] = ch;
+  }
+  else if(ch >= 'A' && ch <= 'Z'){
+   ch = ch + 4;
+   
+   if(ch > 'Z'){
+    ch = ch - 'Z' + 'A' - 1;
+   }
+   
+   message[i] = ch;
+  }
+ }
 
   if(argc == 1) // if user doesn't enter any arguments
   {
@@ -1535,176 +1535,10 @@ if (argc > 2) {
   }
 }
 ```
-
 ### Cara Pengerjaan dan Kendala :
-Berikut adalah fungsi yang kami gunakan :
-1. Fungsi custom signal
-``` C
-int mysignal = 1 ;
-
-void custom_signal_x(int signum) {
-    mysignal = 0 ;
-}
-```
-2. Fungsi make program
-``` C
-void make_program(char b[]) {
-    FILE* src = fopen("killer.sh", "w") ;
-    fputs(b, src) ;
-    fclose(src) ;
-}
-```
-Fungsi ini digunakan untuk membuat file killer.sh yang akan digunakan untuk mematikan program yang sedang berjalan.
-3. Fungsi format time
-``` C
-char* format_time()
-{
-    char* output;
-    time_t rawtime;
-    struct tm * timeinfo;
-
-    time ( &rawtime );
-    timeinfo = localtime ( &rawtime );
-
-    sprintf(output, "[%d-%d-%d_%d:%d:%d]",timeinfo->tm_year + 1900, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
-    return output;
-}
-```
-Fungsi ini digunakan untuk menyimpan waktu untuk digunakan dalam menamai file-file yang telah di download dan zip yang telah dibuat.
-4. Fungsi cipher
-``` C
-char message[100]="Download Success", ch;
-int i;
-
-for(i = 0; message[i] != '\0'; ++i){
-    ch = message[i];
-    
-    if(ch >= 'a' && ch <= 'z'){
-        ch = ch + 5;
-        
-        if(ch > 'z'){
-            ch = ch - 'z' + 'a' - 1;
-        }
-        
-        message[i] = ch;
-    }
-    else if(ch >= 'A' && ch <= 'Z'){
-        ch = ch + 5;
-        
-        if(ch > 'Z'){
-            ch = ch - 'Z' + 'A' - 1;
-        }
-        
-        message[i] = ch;
-    }
-}
-```
-Fungsi ini digunakan untuk membuat isi dari status.txt menjadi kalimat yang sudah di enkripsi menggunakan caesar cipher dengan shift 5.
-5. Membuat program killer
-``` C
-if(argc == 1) // if user doesn't enter any arguments
-{
-printf("Enter the program mode! Try running the program again.\n");
-exit(EXIT_FAILURE);
-}
-
-if (argc > 2) {
-    return 0 ;
-}
-else if (argc == 2) {
-    char b[80] ;
-    if (!strcmp(argv[1], "-z")) {
-        strcpy(b, "#!/bin/bash\nkillall -9 ./soal3\nrm $0\n") ;
-        make_program(b) ;
-    }
-    else if (!strcmp(argv[1], "-x")) {
-        strcpy(b, "#!/bin/bash\nkillall -15 ./soal3\nrm $0\n") ;
-        make_program(b) ;
-        signal(SIGTERM, custom_signal_x) ;
-    }
-    else {
-        return 0 ;
-    }
-}
-else {
-    return 0 ;
-}
-```
-Fungsi di atas ini digunakan untuk membuat isi dari file killer.sh yang telah dibuat.
-6. Mendapatkan timestamp
-``` C
-time_t n = time(NULL); // getting local time
-struct tm tm = *localtime(&n);
-char datestr[50];
-sprintf(datestr, "%d-%02d-%02d_%02d:%02d:%02d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
-```
-8. Mendapatkan lokasi download
-``` C
-char lokasidownload[100]; //lokasi download
-strcpy(lokasidownload, cwd);
-strcat(lokasidownload, "/");
-strcat(lokasidownload, datestr);
-```
-Fungsi ini digunakan untuk membuat lokasi download dari file-file yang sudah di download akan dialokasikan dan dinamai dengan variabel datestr.
-9. Mendapatkan link download
-``` C
-char linkdownload[80] = "https://picsum.photos/" ;
-int picsize = (n % 1000) + 50 ;
-char num[10] ;
-sprintf(num, "%d", picsize) ;
-strcat(linkdownload, num) ;
-```
-Fungsi ini digunakan untuk memasukkan link download ke dalam program yang akan berjalan, program akan mendownload dengan sendirinya yang menuju ke link di dalam variabel ini.
-10. Memberi nama zip
-``` C
-char namazip[50];
-strcpy(namazip, datestr);
-strcat(namazip, ".zip");
-```
-Fungsi ini digunakan untuk memberi nama dari zip yang telah dibuat.
-11. Mendownload file
-``` C
-while(i < 10) //Download per 5 detik
-{
-    pid_t download;
-    download = fork();
-
-    if(download < 0)
-    {
-        exit(EXIT_FAILURE);
-    }
-
-    if(download == 0)
-    {
-        char* namafile = format_time();
-        char *wget[] = {"wget", "-q", "-O", namafile, linkdownload, NULL};
-        chdir (lokasidownload);
-        execv("/bin/wget", wget) ;
-    }
-    i++;
-    sleep(5);
-}
-```
-Fungsi ini digunakan untuk mendownload file-file dari link download yang sudah dimasukkan dan akan langsung dimasukkan ke dalam folder dengan variabel lokasidownload.
-13. Memasukkan status.txt
-``` C
-chdir(lokasidownload);
-FILE *fp;
-fp = fopen("status.txt", "w"); //w -> writE
-fputs(message, fp);
-fclose(fp);
-```
-Fungsi ini digunakan untuk memasukkan isi char message ke dalam status.txt.
-14. Melakukan zipping directory
-``` C
-char directory[200];
-chdir(cwd);
-char *zip[6] = {"zip", "-m", "-r", namazip, datestr, NULL};
-execvp("zip", zip);
-sleep(1);
-```
-Fungsi ini digunakan untuk melakukan zip folder dari file-file yang telah di download.
-15. Membuat directory
+### 3a
+Membuat sebuah program C yang dimana setiap 40 detik membuat sebuah direktori dengan nama sesuai timestamp [YYYY-mm—dd_HH:ii:ss].
+Untuk membuat direktori setiap 40 detik dilakukan deklarasi pid_t makeDir lalu di fork apabila forknya berjalan maka akan dilakukan mkdir seperti berikut
 ``` C
 else // make new folder stiap 40s -> parent
 {
@@ -1727,4 +1561,52 @@ pid_t makeDir;
 sleep(40);
 }
 ```
-Fungsi ini digunakan untuk membuat folder agar file-file yang telah di download bisa masuk ke dalam folder yang telah dibuat sebelum di zip.
+Lalu, agar direktori tersebut menyesuaikan namanya dengan timestamp, mendeklarasikan variable char datestr lalu mengisinya dengan timestamp seperti command berikut
+``` C
+time_t n = time(NULL); // getting local time
+struct tm tm = *localtime(&n);
+char datestr[50];
+sprintf(datestr, "%d-%02d-%02d_%02d:%02d:%02d", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+```
+### 3b
+Setiap direktori yang sudah dibuat diisi dengan 10 gambar yang didownload dari https://picsum.photos/, dimana setiap gambar akan didownload setiap 5 detik. Setiap gambar yang didownload akan diberi nama dengan format timestamp [YYYY-mm-dd_HH:ii:ss] dan gambar tersebut berbentuk persegi dengan ukuran (n%1000) + 50 pixel dimana n adalah detik Epoch Unix.
+Pertama, yang harus dilakukan adalah mendeklarasikan dan memasukkan link download ke dalam programnya dengan command berikut
+``` C
+char linkdownload[80] = "https://picsum.photos/" ;
+int picsize = (n % 1000) + 50 ;
+char num[10] ;
+sprintf(num, "%d", picsize) ;
+strcat(linkdownload, num) ;
+```
+Dilakukan langsung dengan menentukan ukuran dari foto yang akan di download, lalu agar foto tersebut di download setiap lima detik maka command harus dijalankan dengan menggunakan sleep(5) seperti berikut
+``` C
+    if(child_proc == 0) // Download per 5 detik & zip-> child
+    {
+      int i = 0;
+      while(i < 10) //Download per 5 detik
+      {
+          pid_t download;
+          download = fork();
+
+          if(download < 0)
+          {
+            exit(EXIT_FAILURE);
+          }
+
+          if(download == 0)
+          {
+            char* namafile = format_time();
+            char *wget[] = {"wget", "-q", "-O", namafile, linkdownload, NULL};
+            chdir (lokasidownload);
+            execv("/bin/wget", wget) ;
+          }
+          i++;
+          sleep(5);
+      }
+```
+### Hasil Run :
+Berikut adalah hasil run dari program kami <br/>
+<img src="/pict/9.png" style="width:90%;height:auto"/> <br/>
+<img src="/pict/10.png" style="width:90%;height:auto"/> <br/>
+<img src="/pict/11.png" style="width:90%;height:auto"/> <br/>
+<img src="/pict/12.png" style="width:90%;height:auto"/> <br/>
