@@ -1604,6 +1604,110 @@ Dilakukan langsung dengan menentukan ukuran dari foto yang akan di download, lal
           sleep(5);
       }
 ```
+Agar gambar yang di download bernama sesuai timestamp maka dideklarasikan char seperti berikut
+``` C
+char* format_time()
+{
+    char* output;
+    time_t rawtime;
+    struct tm * timeinfo;
+
+    time ( &rawtime );
+    timeinfo = localtime ( &rawtime );
+
+    sprintf(output, "[%d-%d-%d_%d:%d:%d]",timeinfo->tm_year + 1900, timeinfo->tm_mon + 1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+    return output;
+}
+```
+Dan langsung digunakan ke dalam command yang digunakan untuk mendownload file foto.
+### 3c
+Setelah direktori telah terisi dengan 10 gambar, program tersebut akan membuat sebuah file “status.txt”, dimana didalamnya berisi pesan “Download Success” yang terenkripsi dengan teknik Caesar Cipher dan dengan shift 5. Caesar Cipher adalah Teknik enkripsi sederhana yang dimana dapat melakukan enkripsi string sesuai dengan shift/key yang kita tentukan. Misal huruf “A” akan dienkripsi dengan shift 4 maka akan menjadi “E”. Karena Ranora orangnya perfeksionis dan rapi, dia ingin setelah file tersebut dibuat, direktori akan di zip dan direktori akan didelete, sehingga menyisakan hanya file zip saja.
+Untuk problem diatas, diselesaikan dengan membuat rumus dari Caesar ciphernya terlebih dahulu seperti berikut
+``` C
+char message[100]="Download Success", ch;
+	int i;
+	
+	for(i = 0; message[i] != '\0'; ++i){
+		ch = message[i];
+		
+		if(ch >= 'a' && ch <= 'z'){
+			ch = ch + 5;
+			
+			if(ch > 'z'){
+				ch = ch - 'z' + 'a' - 1;
+			}
+			
+			message[i] = ch;
+		}
+		else if(ch >= 'A' && ch <= 'Z'){
+			ch = ch + 5;
+			
+			if(ch > 'Z'){
+				ch = ch - 'Z' + 'A' - 1;
+			}
+			
+			message[i] = ch;
+		}
+	}
+```
+Lalu membuat file status.txt dengan command FILE dan memasukkan variable message ke dalam file status.txt, dilakukan dengan command seperti berikut
+``` C
+chdir(lokasidownload);
+FILE *fp;
+fp = fopen("status.txt", "w"); //w -> writE
+fputs(message, fp);
+fclose(fp);
+```
+### 3d
+Untuk mempermudah pengendalian program, pembimbing magang Ranora ingin program tersebut akan men-generate sebuah program “Killer” yang executable, dimana program tersebut akan menterminasi semua proses program yang sedang berjalan dan akan menghapus dirinya sendiri setelah program dijalankan. Karena Ranora menyukai sesuatu hal yang baru, maka Ranora memiliki ide untuk program “Killer” yang dibuat nantinya harus merupakan program bash.
+Hal yang pertama kali dilakukan untuk menyelesaikan soal 3d adalah membuat file killer.sh dengan membuat fungsi make_program seperti berikut
+``` C
+void make_program(char b[]) {
+    FILE* src = fopen("killer.sh", "w") ;
+    fputs(b, src) ;
+    fclose(src) ;
+}
+```
+### 3e
+Pembimbing magang Ranora juga ingin nantinya program utama yang dibuat Ranora dapat dijalankan di dalam dua mode. Untuk mengaktifkan mode pertama, program harus dijalankan dsdengan argumen -z, dan Ketika dijalankan dalam mode pertama, program utama akan langsung menghentikan semua operasinya Ketika program Killer dijalankan. Sedangkan untuk mengaktifkan mode kedua, program harus dijalankan dengan argumen -x, dan Ketika dijalankan dalam mode kedua, program utama akan berhenti namun membiarkan proses di setiap direktori yang masih berjalan hingga selesai (Direktori yang sudah dibuat akan mendownload gambar sampai selesai dan membuat file txt, lalu zip dan delete direktori).
+Soal 3d dan 3e berkorelasi, maka dari itu setelah membuat file killer.sh, file tersebut akan diisi dengan program killernya. Program killer ini dibuat langsung sekaligus dengan mode program yang dijalankan. Karena dua mode program ini perbedaannya terletak di program killernya. Bisa dilihat seperti berikut.
+``` C
+  if(argc == 1) // if user doesn't enter any arguments
+  {
+    printf("Enter the program mode! Try running the program again.\n");
+    exit(EXIT_FAILURE);
+  }
+
+if (argc > 2) {
+        return 0 ;
+    }
+    else if (argc == 2) {
+        char b[80] ;
+        if (!strcmp(argv[1], "-z")) {
+            strcpy(b, "#!/bin/bash\nkillall -9 ./soal3\nrm $0\n") ;
+            make_program(b) ;
+        }
+        else if (!strcmp(argv[1], "-x")) {
+            strcpy(b, "#!/bin/bash\nkillall -15 ./soal3\nrm $0\n") ;
+            make_program(b) ;
+            signal(SIGTERM, custom_signal_x) ;
+        }
+        else {
+            return 0 ;
+        }
+    }
+    else {
+        return 0 ;
+    }
+```
+Lalu membuat zipping directory seperti berikut
+``` C
+char directory[200];
+chdir(cwd);
+char *zip[6] = {"zip", "-m", "-r", namazip, datestr, NULL};
+execvp("zip", zip);
+sleep(1);
+```
 ### Hasil Run :
 Berikut adalah hasil run dari program kami <br/>
 <img src="/pict/9.png" style="width:90%;height:auto"/> <br/>
