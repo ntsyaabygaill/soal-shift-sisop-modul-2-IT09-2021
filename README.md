@@ -1010,6 +1010,8 @@ void pindah(char *lokasi, char *file, char *nama)
   }
 }
 ```
+Fungsi ini bertujuan untuk memindahkan file ke folder yang sesuai dengan kategorinya dan juga menulis keterangan nama pada keterangan.txt
+
 2. Fungsi copy
 ``` C
 void copy(char *src, char *dest, char *lokasi, char *nama)
@@ -1090,6 +1092,8 @@ void copy(char *src, char *dest, char *lokasi, char *nama)
   }
 }
 ```
+Fungsi ini digunakan untuk melakukan copy file dari source ke destination, serta memasukkan umur hewan ke keterangan.txt
+
 3. Fungsi unzip
 ``` C
 child = fork();
@@ -1099,6 +1103,8 @@ if (child == 0)
 	execv("/usr/bin/unzip", argv);
 }
 ```
+Fungsi ini digunakan untuk melakukan unzip pada pets.zip
+
 4. Fungsi find
 ``` C
 while ((waitpid(child, &status, 0)) > 0);
@@ -1109,6 +1115,8 @@ if (child1 == 0)
 	execv("/usr/bin/find", argv);
 }
 ```
+Fungsi ini digunakan untuk menemukan file-file yang ada dalam folder petshop
+
 5. Fungsi menentukan destination dari tiap file
 ``` C
 while ((waitpid(child1, &status, 0)) > 0)
@@ -1186,6 +1194,7 @@ if (child2 == 0)
     perror("Couldn't open the directory");
 }
 ```
+Fungsi ini digunakan untuk memasukkan lokasi awal file ke folder akhirnya, dan pada fungsi ini juga akan dipanggil fungsi pindah.
 
 ## Nomor 3 :
 ### Soal :
