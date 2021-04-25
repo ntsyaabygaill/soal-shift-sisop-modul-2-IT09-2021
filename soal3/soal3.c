@@ -46,7 +46,7 @@ int main(int argc,char* argv[]) //supaya dapat passing arguments
 		ch = message[i];
 		
 		if(ch >= 'a' && ch <= 'z'){
-			ch = ch + 4;
+			ch = ch + 5;
 			
 			if(ch > 'z'){
 				ch = ch - 'z' + 'a' - 1;
@@ -55,7 +55,7 @@ int main(int argc,char* argv[]) //supaya dapat passing arguments
 			message[i] = ch;
 		}
 		else if(ch >= 'A' && ch <= 'Z'){
-			ch = ch + 4;
+			ch = ch + 5;
 			
 			if(ch > 'Z'){
 				ch = ch - 'Z' + 'A' - 1;
