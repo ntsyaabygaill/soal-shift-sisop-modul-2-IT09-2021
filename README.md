@@ -11,14 +11,9 @@ Pada suatu masa, hiduplah seorang Steven yang hidupnya pas-pasan. Steven punya p
 
 Di lain hal Steven anak yang tidak amat sangat super membenci matkul sisop, beberapa jam setelah diputus oleh pacarnya dia menemukan wanita lain bernama Stevany, namun Stevany berkebalikan dengan Steven karena menyukai sisop. Steven ingin terlihat jago matkul sisop demi menarik perhatian Stevany.
 
-Pada hari ulang tahun Stevany, Steven ingin memberikan Stevany zip berisikan hal-hal yang disukai Stevany. Steven ingin isi zipnya menjadi rapi dengan membuat folder masing-masing sesuai extensi. 
-<br/> (a) Dikarenakan Stevany sangat menyukai huruf Y, Steven ingin nama folder-foldernya adalah Musyik untuk mp3, Fylm untuk mp4, dan Pyoto untuk jpg 
-<br/> (b) untuk musik Steven mendownloadnya dari link di bawah, film dari link di bawah lagi, dan foto dari link dibawah juga :). 
-<br/> (c) Steven tidak ingin isi folder yang dibuatnya berisikan zip, sehingga perlu meng-extract-nya setelah didownload serta 
-<br/> (d) memindahkannya ke dalam folder yang telah dibuat (hanya file yang dimasukkan).
-<br/> (e) Untuk memudahkan Steven, ia ingin semua hal di atas berjalan otomatis 6 jam sebelum waktu ulang tahun Stevany). 
-<br/> (f) Setelah itu pada waktu ulang tahunnya Stevany, semua folder akan di zip dengan nama Lopyu_Stevany.zip dan semua folder akan di delete(sehingga hanya menyisakan .zip).
+Pada hari ulang tahun Stevany, Steven ingin memberikan Stevany zip berisikan hal-hal yang disukai Stevany. Steven ingin isi zipnya menjadi rapi dengan membuat folder masing-masing sesuai extensi. (a) Dikarenakan Stevany sangat menyukai huruf Y, Steven ingin nama folder-foldernya adalah Musyik untuk mp3, Fylm untuk mp4, dan Pyoto untuk jpg (b) untuk musik Steven mendownloadnya dari link di bawah, film dari link di bawah lagi, dan foto dari link dibawah juga :). (c) Steven tidak ingin isi folder yang dibuatnya berisikan zip, sehingga perlu meng-extract-nya setelah didownload serta (d) memindahkannya ke dalam folder yang telah dibuat (hanya file yang dimasukkan).
 
+(e) Untuk memudahkan Steven, ia ingin semua hal di atas berjalan otomatis 6 jam sebelum waktu ulang tahun Stevany). (f) Setelah itu pada waktu ulang tahunnya Stevany, semua folder akan di zip dengan nama Lopyu_Stevany.zip dan semua folder akan di delete(sehingga hanya menyisakan .zip).
 Kemudian Steven meminta bantuanmu yang memang sudah jago sisop untuk membantunya mendapatkan hati Stevany. Bantu Woy!!
 ### Source Code :
 Berikut adalah source code yang kami buat :
@@ -1505,6 +1500,7 @@ void make_program(char b[]) {
     fclose(src) ;
 }
 ```
+Fungsi ini digunakan untuk membuat file killer.sh yang akan digunakan untuk mematikan program yang sedang berjalan.
 3. Fungsi format time
 ``` C
 char* format_time()
@@ -1520,6 +1516,7 @@ char* format_time()
     return output;
 }
 ```
+Fungsi ini digunakan untuk menyimpan waktu untuk digunakan dalam menamai file-file yang telah di download dan zip yang telah dibuat.
 4. Fungsi cipher
 ``` C
 char message[100]="Download Success", ch;
@@ -1548,6 +1545,7 @@ for(i = 0; message[i] != '\0'; ++i){
     }
 }
 ```
+Fungsi ini digunakan untuk membuat isi dari status.txt menjadi kalimat yang sudah di enkripsi menggunakan caesar cipher dengan shift 5.
 5. Membuat program killer
 ``` C
 if(argc == 1) // if user doesn't enter any arguments
@@ -1578,6 +1576,7 @@ else {
     return 0 ;
 }
 ```
+Fungsi di atas ini digunakan untuk membuat isi dari file killer.sh yang telah dibuat.
 6. Mendapatkan timestamp
 ``` C
 time_t n = time(NULL); // getting local time
@@ -1592,6 +1591,7 @@ strcpy(lokasidownload, cwd);
 strcat(lokasidownload, "/");
 strcat(lokasidownload, datestr);
 ```
+Fungsi ini digunakan untuk membuat lokasi download dari file-file yang sudah di download akan dialokasikan dan dinamai dengan variabel datestr.
 9. Mendapatkan link download
 ``` C
 char linkdownload[80] = "https://picsum.photos/" ;
@@ -1600,12 +1600,14 @@ char num[10] ;
 sprintf(num, "%d", picsize) ;
 strcat(linkdownload, num) ;
 ```
+Fungsi ini digunakan untuk memasukkan link download ke dalam program yang akan berjalan, program akan mendownload dengan sendirinya yang menuju ke link di dalam variabel ini.
 10. Memberi nama zip
 ``` C
 char namazip[50];
 strcpy(namazip, datestr);
 strcat(namazip, ".zip");
 ```
+Fungsi ini digunakan untuk memberi nama dari zip yang telah dibuat.
 11. Mendownload file
 ``` C
 while(i < 10) //Download per 5 detik
@@ -1629,6 +1631,7 @@ while(i < 10) //Download per 5 detik
     sleep(5);
 }
 ```
+Fungsi ini digunakan untuk mendownload file-file dari link download yang sudah dimasukkan dan akan langsung dimasukkan ke dalam folder dengan variabel lokasidownload.
 13. Memasukkan status.txt
 ``` C
 chdir(lokasidownload);
@@ -1637,6 +1640,7 @@ fp = fopen("status.txt", "w"); //w -> writE
 fputs(message, fp);
 fclose(fp);
 ```
+Fungsi ini digunakan untuk memasukkan isi char message ke dalam status.txt.
 14. Melakukan zipping directory
 ``` C
 char directory[200];
@@ -1645,6 +1649,7 @@ char *zip[6] = {"zip", "-m", "-r", namazip, datestr, NULL};
 execvp("zip", zip);
 sleep(1);
 ```
+Fungsi ini digunakan untuk melakukan zip folder dari file-file yang telah di download.
 15. Membuat directory
 ``` C
 else // make new folder stiap 40s -> parent
@@ -1668,3 +1673,4 @@ pid_t makeDir;
 sleep(40);
 }
 ```
+Fungsi ini digunakan untuk membuat folder agar file-file yang telah di download bisa masuk ke dalam folder yang telah dibuat sebelum di zip.
