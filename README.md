@@ -1425,3 +1425,17 @@ if (argc > 2) {
 ```
 
 ### Cara Pengerjaan dan Kendala :
+Berikut adalah fungsi yang kami gunakan :
+1. Fungsi custom signal
+2. Fungsi make program
+3. Fungsi format time
+4. Fungsi cipher
+5. Membuat program killer
+6. Mendapatkan timestamp
+7. Mendapatkan lokasi download
+8. Mendapatkan link download
+9. Memberi nama zip
+10. Mendownload file
+11. Memasukkan status.txt
+12. Melakukan zipping directory
+13. Membuat directory
