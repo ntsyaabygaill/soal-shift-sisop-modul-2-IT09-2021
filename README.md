@@ -743,6 +743,11 @@ int main()
 ```
 Namun terjadi kendala pada fungsi waktu yang tidak berjalan, sehingga kami membuat dalam setiap percabangan variabel seconds dan seconds2 kurang dari 0, dimana seharusnya sama dengan 0. 
 
+### Hasil Run :
+Berikut adalah hasil run dari program kami <br/>
+<img src="/pict/7.png" style="width:90%;height:auto"/> <br/>
+<img src="/pict/8.png" style="width:90%;height:auto"/> <br/>
+
 ## Nomor 2 :
 ### Soal :
 (a) Mengextract zip yang diberikan ke dalam folder “/home/[user]/modul2/petshop”. Program harus bisa membedakan file dan folder sehingga dapat memproses file yang seharusnya dikerjakan dan menghapus folder-folder yang tidak dibutuhkan. <br/>
