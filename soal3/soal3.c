@@ -195,7 +195,7 @@ if (argc > 2) {
       execvp("zip", zip);
     sleep(1);
     }
-    else // make new folder stiap 30s -> parent
+    else // make new folder stiap 40s -> parent
     {
 
       pid_t makeDir;
