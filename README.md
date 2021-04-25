@@ -7,14 +7,13 @@
 
 ## Nomor 1 :
 ### Soal :
-Pada suatu masa, hiduplah seorang Steven yang hidupnya pas-pasan. Steven punya pacar, namun sudah putus sebelum pacaran. Ketika dia galau memikirkan mantan, ia selalu menonton https://www.youtube.com/watch?v=568DH_9CMKI untuk menghilangkan kesedihannya. 
+(a) Menamai folder dengan Musyik untuk mp3, Fylm untuk mp4, dan Pyoto untuk jpg.
+(b) Mendownload file dari link yang tersedia.
+(c) Extract zip setelah download
+(d) Memindahkan file ke dalam folder yang telah dibuat.
+(e) Poin a-d berjalan otomatis 6 jam sebelum waktu ulang tahun Stevany. 
+(f) Pada waktu ulang tahunnya Stevany, semua folder akan di zip dengan nama Lopyu_Stevany.zip dan semua folder akan di delete.
 
-Di lain hal Steven anak yang tidak amat sangat super membenci matkul sisop, beberapa jam setelah diputus oleh pacarnya dia menemukan wanita lain bernama Stevany, namun Stevany berkebalikan dengan Steven karena menyukai sisop. Steven ingin terlihat jago matkul sisop demi menarik perhatian Stevany.
-
-Pada hari ulang tahun Stevany, Steven ingin memberikan Stevany zip berisikan hal-hal yang disukai Stevany. Steven ingin isi zipnya menjadi rapi dengan membuat folder masing-masing sesuai extensi. (a) Dikarenakan Stevany sangat menyukai huruf Y, Steven ingin nama folder-foldernya adalah Musyik untuk mp3, Fylm untuk mp4, dan Pyoto untuk jpg (b) untuk musik Steven mendownloadnya dari link di bawah, film dari link di bawah lagi, dan foto dari link dibawah juga :). (c) Steven tidak ingin isi folder yang dibuatnya berisikan zip, sehingga perlu meng-extract-nya setelah didownload serta (d) memindahkannya ke dalam folder yang telah dibuat (hanya file yang dimasukkan).
-
-(e) Untuk memudahkan Steven, ia ingin semua hal di atas berjalan otomatis 6 jam sebelum waktu ulang tahun Stevany). (f) Setelah itu pada waktu ulang tahunnya Stevany, semua folder akan di zip dengan nama Lopyu_Stevany.zip dan semua folder akan di delete(sehingga hanya menyisakan .zip).
-Kemudian Steven meminta bantuanmu yang memang sudah jago sisop untuk membantunya mendapatkan hati Stevany. Bantu Woy!!
 ### Source Code :
 Berikut adalah source code yang kami buat :
 ```C
@@ -190,7 +189,226 @@ int main(){
     }
 }
 ```
-### Cara Pengerjaan dan Kendala :
+### Cara Pengerjaan :
+#### Library yang kami gunakan <br/> 
+```C
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <unistd.h>
+#include <syslog.h>
+#include <string.h>
+#include <wait.h>
+#include <time.h>
+```
+Meng-include beberapa library yang dibutuhkan untuk program yang dibuat.
+
+#### Inisialiasi variabel
+``` C
+pid_t pid, sid;     
+char date[100]; 
+time_t rawDate;
+struct tm *localDate;
+int status;
+pid_t cid = fork();
+pid = fork();
+```
+<br/> Menginisialisasi varibel yang dibutuhkan dengan typedata yang sesuai.
+
+#### 1A
+4. Membandingkan waktu
+``` C
+rawDate = time(NULL);
+localDate = localtime(&rawDate);
+strftime(date, 50, "%Y-%m-%d %H:%M:%S", localDate);
+```
+<br/> Pada command ini kami membandingkan waktu dengan cara menginisialisasi localtime (waktu saat ini) terlebih dahulu, dan membuat format date menggunakan fungsi **strftime**.
+``` C
+if(strcmp(date,"2021-04-09 16:22:00") == 0)
+```
+
+Kemudian localtime akan dicompare dengan waktu-waktu lain yang diperlukan menggunakan fungsi **strcmp**. Pada command dibawah, localtime cdi compare dengan H-6 Jam ulang tahun stevanny untuk melakukan beberapa perintah pada program,sesuai soal.
+``` C
+if(strcmp(date,"2021-04-09 22:22:00") == 0)
+```
+Sedangkan fungsi **strcmp** dibawah,digunakan untuk meng-compare localtime dengan waktu tepat saat ulang tahun stevanny. 
+
+6. Membuat directory Pyoto
+``` C
+if (cid == 0) {
+    char *argv[] = {"mkdir", "-p", "Pyoto", NULL};
+    execv("/bin/mkdir", argv);    
+}
+```
+Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk membuat sebuah direktori bernama Pyoto. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
+
+8. Membuat directory Musyik
+``` C
+else 
+{
+    cid = fork();
+    if (cid == 0) {
+    char *argv[] = {"mkdir", "-p", "Musyik", NULL};
+    execv("/bin/mkdir", argv);                  
+}
+```
+Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk membuat sebuah direktori bernama Musyik. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
+
+10. Membuat directory Fylm
+``` C
+while(wait(NULL) != cid);
+
+cid = fork();
+if (cid == 0) {                    
+    char *argv[] = {"mkdir", "-p", "Fylm", NULL};
+    execv("/bin/mkdir", argv);           
+}
+```
+Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk membuat sebuah direktori bernama Fylm. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
+
+12. Mendownload Zip Foto
+``` C
+while(wait(NULL) != cid);
+
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"wget","--no-check-certificate", "-q", "https://drive.google.com/uc?id=1FsrAzb9B5ixooGUs0dGiBr-rC7TS9wTD&export=download", "-O", "Foto_for_Stevany.zip", NULL};
+    execv("/usr/bin/wget", argv);                   
+}
+```
+Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk men-download sebuah file "Foto_for_Stevany.zip". Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
+
+14. Mendownload Zip Musik
+``` C
+while(wait(NULL) != cid);
+
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"wget","--no-check-certificate", "-q", "https://drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J&export=download", "-O", "Musik_for_Stevany.zip", NULL};                    
+    execv("/usr/bin/wget", argv);
+}
+```
+Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk men-download sebuah file "Musik_for_Stevany.zip". Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
+
+16. Mendownload Zip Film
+``` C
+while(wait(NULL) != cid);
+
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"wget","--no-check-certificate", "-q", "https://drive.google.com/uc?id=1ktjGgDkL0nNpY-vT7rT7O6ZI47Ke9xcp&export=download", "-O", "Film_for_Stevany.zip", NULL};                    
+    execv("/usr/bin/wget", argv);
+}
+```
+Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk men-download sebuah file "Film_for_Stevany.zip". Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
+
+18. Unzip Foto
+``` C
+while(wait(NULL) != cid);
+
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"unzip", "-q", "Foto_for_Stevany.zip", NULL};
+    execv("/usr/bin/unzip", argv);
+}
+```
+Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk meng-unzip file "Foto_for_Stevany.zip" yang telah didownload. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
+
+20. Unzip Musik
+``` C
+while(wait(NULL) != cid);
+
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"unzip", "-q", "Musik_for_Stevany.zip", NULL};
+    execv("/usr/bin/unzip", argv);
+}
+```
+
+Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk meng-unzip file "Musik_for_Stevany.zip" yang telah didownload. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
+
+22. Unzip Film
+``` C
+while(wait(NULL) != cid);
+
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"unzip", "-q", "Film_for_Stevany.zip", NULL};
+    execv("/usr/bin/unzip", argv);
+}
+```
+
+Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk meng-unzip file "Film_for_Stevany.zip" yang telah didownload. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
+
+24. Memindah Foto ke Pyoto
+``` C
+while(wait(NULL) != cid);
+
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"mv", "FOTO", "Pyoto", NULL};
+    execv("/bin/mv", argv); 
+}
+
+```
+Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk memindahkan direktori FOTO(hasil unzip) ke direktori Pyoto. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
+
+26. Memindah Musik ke Musyik
+``` C
+while(wait(NULL) != cid);
+
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"mv", "MUSIK", "Musyik", NULL};
+    execv("/bin/mv", argv); 
+}
+```
+Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk memindahkan direktori MUSIK(hasil unzip) ke direktori Musyik. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
+
+28. Memindah Film ke Fylm
+``` C
+while(wait(NULL) != cid);
+
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"mv", "FILM", "Fylm", NULL};
+    execv("/bin/mv", argv);
+}
+```
+Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk memindahkan direktori FILM(hasil unzip) ke direktori Fylm. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
+
+<br/> Setelah fungsi ini kami menambahkan break untuk menghentikan loop yang pertama.
+
+30. Zip Pyoto, Musyik, Fylm ke Lopyu_Stevany.zip
+``` C
+if (cid == 0) {
+    char *argv[] = {"zip", "-r", "Lopyu_Stevany.zip", "Pyoto", "Musyik", "Fylm", NULL};
+    execv("/usr/bin/zip", argv);
+}
+```
+Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk men-zip seluruh direktori yang telah dipindahkan tadi(Pyoto, Musyikm, Fylm) dengan format nama file zipnya adalah "Loypu_Stevany.zip". Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
+
+32. Menghapus Folder yang tidak perlu
+``` C
+else{
+
+while ((wait(&status)) > 0);
+cid = fork();
+if (cid == 0) {
+    char *argv[] = {"rm", "-r", "FILM", "FOTO", "MUSIK", "Pyoto", "Fylm", "Musyik", NULL};
+    execv("/bin/rm", argv);
+}
+while(wait(NULL) != cid);
+}
+```
+Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk menghapus seluruh direktori(FILM, FOTO, MUSIK, Pyoto, Fylm, Musyik) beserta isinya. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
+
+Setelah fungsi ini kami menambahkan break untuk menghentikan loop yang kedua.
+
+### Kendala :
 Pertama-tama kami mencoba untuk menulis program secara langsung (tidak menggunakan daemon) sebagai berikut :
 ``` C
 #include <stdio.h>
@@ -490,223 +708,7 @@ int main()
 
 }
 ```
-Namun terjadi kendala pada fungsi waktu yang tidak berjalan, sehingga kamu membuat dalam setiap percabangan variabel seconds dan seconds2 kurang dari 0, dimana seharusnya sama dengan 0. Lalu kami mencoba memasukkan code ini ke daemon, namun ubuntu yang kami gunakan mengalami freeze kemudian black screen. Sehingga kami mencoba membuat code langsung di daemon seperti diatas, dengan penjelasan masing-masing fungsi sebagai berikut :
-1. Library yang kami gunakan <br/> 
-```C
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <unistd.h>
-#include <syslog.h>
-#include <string.h>
-#include <wait.h>
-#include <time.h>
-```
-Meng-include beberapa library yang dibutuhkan untuk program yang dibuat.
-
-2. Inisialiasi variabel
-``` C
-pid_t pid, sid;     
-char date[100]; 
-time_t rawDate;
-struct tm *localDate;
-int status;
-pid_t cid = fork();
-pid = fork();
-```
-<br/> Menginisialisasi varibel yang dibutuhkan dengan typedata yang sesuai.
-
-4. Membandingkan waktu
-``` C
-rawDate = time(NULL);
-localDate = localtime(&rawDate);
-strftime(date, 50, "%Y-%m-%d %H:%M:%S", localDate);
-```
-<br/> Pada command ini kami membandingkan waktu dengan cara menginisialisasi localtime (waktu saat ini) terlebih dahulu, dan membuat format date menggunakan fungsi **strftime**.
-``` C
-if(strcmp(date,"2021-04-09 16:22:00") == 0)
-```
-
-Kemudian localtime akan dicompare dengan waktu-waktu lain yang diperlukan menggunakan fungsi **strcmp**. Pada command dibawah, localtime cdi compare dengan H-6 Jam ulang tahun stevanny untuk melakukan beberapa perintah pada program,sesuai soal.
-``` C
-if(strcmp(date,"2021-04-09 22:22:00") == 0)
-```
-Sedangkan fungsi **strcmp** dibawah,digunakan untuk meng-compare localtime dengan waktu tepat saat ulang tahun stevanny. 
-
-6. Membuat directory Pyoto
-``` C
-if (cid == 0) {
-    char *argv[] = {"mkdir", "-p", "Pyoto", NULL};
-    execv("/bin/mkdir", argv);    
-}
-```
-Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk membuat sebuah direktori bernama Pyoto. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
-
-8. Membuat directory Musyik
-``` C
-else 
-{
-    cid = fork();
-    if (cid == 0) {
-    char *argv[] = {"mkdir", "-p", "Musyik", NULL};
-    execv("/bin/mkdir", argv);                  
-}
-```
-Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk membuat sebuah direktori bernama Musyik. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
-
-10. Membuat directory Fylm
-``` C
-while(wait(NULL) != cid);
-
-cid = fork();
-if (cid == 0) {                    
-    char *argv[] = {"mkdir", "-p", "Fylm", NULL};
-    execv("/bin/mkdir", argv);           
-}
-```
-Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk membuat sebuah direktori bernama Fylm. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
-
-12. Mendownload Zip Foto
-``` C
-while(wait(NULL) != cid);
-
-cid = fork();
-if (cid == 0) {
-    char *argv[] = {"wget","--no-check-certificate", "-q", "https://drive.google.com/uc?id=1FsrAzb9B5ixooGUs0dGiBr-rC7TS9wTD&export=download", "-O", "Foto_for_Stevany.zip", NULL};
-    execv("/usr/bin/wget", argv);                   
-}
-```
-Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk men-download sebuah file "Foto_for_Stevany.zip". Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
-
-14. Mendownload Zip Musik
-``` C
-while(wait(NULL) != cid);
-
-cid = fork();
-if (cid == 0) {
-    char *argv[] = {"wget","--no-check-certificate", "-q", "https://drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J&export=download", "-O", "Musik_for_Stevany.zip", NULL};                    
-    execv("/usr/bin/wget", argv);
-}
-```
-Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk men-download sebuah file "Musik_for_Stevany.zip". Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
-
-16. Mendownload Zip Film
-``` C
-while(wait(NULL) != cid);
-
-cid = fork();
-if (cid == 0) {
-    char *argv[] = {"wget","--no-check-certificate", "-q", "https://drive.google.com/uc?id=1ktjGgDkL0nNpY-vT7rT7O6ZI47Ke9xcp&export=download", "-O", "Film_for_Stevany.zip", NULL};                    
-    execv("/usr/bin/wget", argv);
-}
-```
-Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk men-download sebuah file "Film_for_Stevany.zip". Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
-
-18. Unzip Foto
-``` C
-while(wait(NULL) != cid);
-
-cid = fork();
-if (cid == 0) {
-    char *argv[] = {"unzip", "-q", "Foto_for_Stevany.zip", NULL};
-    execv("/usr/bin/unzip", argv);
-}
-```
-Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk meng-unzip file "Foto_for_Stevany.zip" yang telah didownload. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
-
-20. Unzip Musik
-``` C
-while(wait(NULL) != cid);
-
-cid = fork();
-if (cid == 0) {
-    char *argv[] = {"unzip", "-q", "Musik_for_Stevany.zip", NULL};
-    execv("/usr/bin/unzip", argv);
-}
-```
-
-Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk meng-unzip file "Musik_for_Stevany.zip" yang telah didownload. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
-
-22. Unzip Film
-``` C
-while(wait(NULL) != cid);
-
-cid = fork();
-if (cid == 0) {
-    char *argv[] = {"unzip", "-q", "Film_for_Stevany.zip", NULL};
-    execv("/usr/bin/unzip", argv);
-}
-```
-
-Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk meng-unzip file "Film_for_Stevany.zip" yang telah didownload. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
-
-24. Memindah Foto ke Pyoto
-``` C
-while(wait(NULL) != cid);
-
-cid = fork();
-if (cid == 0) {
-    char *argv[] = {"mv", "FOTO", "Pyoto", NULL};
-    execv("/bin/mv", argv); 
-}
-
-```
-Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk memindahkan direktori FOTO(hasil unzip) ke direktori Pyoto. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
-
-26. Memindah Musik ke Musyik
-``` C
-while(wait(NULL) != cid);
-
-cid = fork();
-if (cid == 0) {
-    char *argv[] = {"mv", "MUSIK", "Musyik", NULL};
-    execv("/bin/mv", argv); 
-}
-```
-Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk memindahkan direktori MUSIK(hasil unzip) ke direktori Musyik. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
-
-28. Memindah Film ke Fylm
-``` C
-while(wait(NULL) != cid);
-
-cid = fork();
-if (cid == 0) {
-    char *argv[] = {"mv", "FILM", "Fylm", NULL};
-    execv("/bin/mv", argv);
-}
-```
-Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk memindahkan direktori FILM(hasil unzip) ke direktori Fylm. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
-
-<br/> Setelah fungsi ini kami menambahkan break untuk menghentikan loop yang pertama.
-
-30. Zip Pyoto, Musyik, Fylm ke Lopyu_Stevany.zip
-``` C
-if (cid == 0) {
-    char *argv[] = {"zip", "-r", "Lopyu_Stevany.zip", "Pyoto", "Musyik", "Fylm", NULL};
-    execv("/usr/bin/zip", argv);
-}
-```
-Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk men-zip seluruh direktori yang telah dipindahkan tadi(Pyoto, Musyikm, Fylm) dengan format nama file zipnya adalah "Loypu_Stevany.zip". Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
-
-32. Menghapus Folder yang tidak perlu
-``` C
-else{
-
-while ((wait(&status)) > 0);
-cid = fork();
-if (cid == 0) {
-    char *argv[] = {"rm", "-r", "FILM", "FOTO", "MUSIK", "Pyoto", "Fylm", "Musyik", NULL};
-    execv("/bin/rm", argv);
-}
-while(wait(NULL) != cid);
-}
-```
-Pada command ini, dilakukan **fork()** yang didalamnya terdapat suatu array **argv** yang memiliki fungsi untuk menghapus seluruh direktori(FILM, FOTO, MUSIK, Pyoto, Fylm, Musyik) beserta isinya. Dan nantinya akan dieksekusi menggunakan fungsi **exec**.
-
-Setelah fungsi ini kami menambahkan break untuk menghentikan loop yang kedua.
+Namun terjadi kendala pada fungsi waktu yang tidak berjalan, sehingga kamu membuat dalam setiap percabangan variabel seconds dan seconds2 kurang dari 0, dimana seharusnya sama dengan 0. 
 
 ## Nomor 2 :
 ### Soal :
