@@ -1197,7 +1197,7 @@ if (child2 == 0)
 Fungsi ini digunakan untuk memasukkan lokasi awal file ke folder akhirnya, dan pada fungsi ini juga akan dipanggil fungsi pindah.
 
 ### Hasil Run :
-Berikut adalah hasil run dari program kami
+Berikut adalah hasil run dari program kami <br/>
 <img src="/pict/1.png" style="width:90%;height:auto"/> <br/>
 <img src="/pict/2.png" style="width:90%;height:auto"/> <br/>
 <img src="/pict/3.png" style="width:90%;height:auto"/> <br/>
