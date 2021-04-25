@@ -6,6 +6,28 @@ Daniel Evan | 05311940000016
 Natasya Abygail N | 05111940000020
 Muhammad Naufal Imantyasto | 05111940000041
 
+## List of Contents :
+- [No 1](#Cara-Pengerjaan)
+	- [1a](#1A)
+	- [1b](#1B)
+	- [1c](#1C)
+	- [1d](#1D)
+	- [1e](#1E)
+	- [1f](#1F)
+- [No 2](#no-2)
+	- [2a](#2A)
+	- [2b](#2B)
+	- [2c](#2C)
+	- [2d](#2D)
+	- [2e](#2E)
+- [No 3](#Nomor-3)
+	- [3a](#3A)
+	- [3b](#3B)
+	- [3c](#3C)
+	- [3d](#3D)
+	- [3e](#3E)
+
+
 ## Nomor 1 :
 ### Soal :
 (a) Menamai folder dengan Musyik untuk mp3, Fylm untuk mp4, dan Pyoto untuk jpg. <br/>
