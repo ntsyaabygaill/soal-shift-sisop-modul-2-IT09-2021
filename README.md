@@ -1196,6 +1196,15 @@ if (child2 == 0)
 ```
 Fungsi ini digunakan untuk memasukkan lokasi awal file ke folder akhirnya, dan pada fungsi ini juga akan dipanggil fungsi pindah.
 
+### Hasil Run :
+Berikut adalah hasil run dari program kami
+<img src="/pict/1.png" style="width:90%;height:auto"/> <br/>
+<img src="/pict/2.png" style="width:90%;height:auto"/> <br/>
+<img src="/pict/3.png" style="width:90%;height:auto"/> <br/>
+<img src="/pict/4.png" style="width:90%;height:auto"/> <br/>
+<img src="/pict/5.png" style="width:90%;height:auto"/> <br/>
+<img src="/pict/6.png" style="width:90%;height:auto"/> <br/>
+
 ## Nomor 3 :
 ### Soal :
 Ranora adalah mahasiswa Teknik Informatika yang saat ini sedang menjalani magang di perusahan ternama yang bernama “FakeKos Corp.”, perusahaan yang bergerak dibidang keamanan data. Karena Ranora masih magang, maka beban tugasnya tidak sebesar beban tugas pekerja tetap perusahaan. Di hari pertama Ranora bekerja, pembimbing magang Ranora memberi tugas pertamanya untuk membuat sebuah program.
