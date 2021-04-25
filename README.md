@@ -1224,7 +1224,7 @@ fprintf(fptr, "umur : %s tahun\n\n", umur);
 
 fclose(fptr);
 ```
-Berikut adalah fungsi yang kami gunakan untuk memasukkan data nama dan umur ke dalam file keterangan.txt.
+Berikut adalah fungsi yang kami gunakan untuk memasukkan data nama dan umur ke dalam file keterangan.txt, dengan menggunakan `fprintf` serta fungsi lainnya untuk menghandle file pada bahasa pemrograman C.
 
 ### Kendala :
 Sebelum membuat code diatas kami sempat mencoba membuat code lain, namun belum bisa memasukkan file sesuai dengan kategorinya.
