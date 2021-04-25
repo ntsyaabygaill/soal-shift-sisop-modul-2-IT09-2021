@@ -745,15 +745,11 @@ Namun terjadi kendala pada fungsi waktu yang tidak berjalan, sehingga kami membu
 
 ## Nomor 2 :
 ### Soal :
-Loba bekerja di sebuah petshop terkenal, suatu saat dia mendapatkan zip yang berisi banyak sekali foto peliharaan dan Ia diperintahkan untuk mengkategorikan foto-foto peliharaan tersebut. Loba merasa kesusahan melakukan pekerjaanya secara manual, apalagi ada kemungkinan ia akan diperintahkan untuk melakukan hal yang sama. Kamu adalah teman baik Loba dan Ia meminta bantuanmu untuk membantu pekerjaannya.
-
-Pertama-tama program perlu mengextract zip yang diberikan ke dalam folder “/home/[user]/modul2/petshop”. Karena bos Loba teledor, dalam zip tersebut bisa berisi folder-folder yang tidak penting, maka program harus bisa membedakan file dan folder sehingga dapat memproses file yang seharusnya dikerjakan dan menghapus folder-folder yang tidak dibutuhkan.
-Foto peliharaan perlu dikategorikan sesuai jenis peliharaan, maka kamu harus membuat folder untuk setiap jenis peliharaan yang ada dalam zip. Karena kamu tidak mungkin memeriksa satu-persatu, maka program harus membuatkan folder-folder yang dibutuhkan sesuai dengan isi zip.
-Contoh: Jenis peliharaan kucing akan disimpan dalam “/petshop/cat”, jenis peliharaan kura-kura akan disimpan dalam “/petshop/turtle”.
-Setelah folder kategori berhasil dibuat, programmu akan memindahkan foto ke folder dengan kategori yang sesuai dan di rename dengan nama peliharaan.
-Contoh: “/petshop/cat/joni.jpg”. 
-Karena dalam satu foto bisa terdapat lebih dari satu peliharaan maka foto harus di pindah ke masing-masing kategori yang sesuai. Contoh: foto dengan nama “dog;baro;1_cat;joni;2.jpg” dipindah ke folder “/petshop/cat/joni.jpg” dan “/petshop/dog/baro.jpg”.
-Di setiap folder buatlah sebuah file "keterangan.txt" yang berisi nama dan umur semua peliharaan dalam folder tersebut. Format harus sesuai contoh.
+(a) Mengextract zip yang diberikan ke dalam folder “/home/[user]/modul2/petshop”. Program harus bisa membedakan file dan folder sehingga dapat memproses file yang seharusnya dikerjakan dan menghapus folder-folder yang tidak dibutuhkan. <br/>
+(b)Foto peliharaan dikategorikan sesuai jenis peliharaan, untuk setiap jenis peliharaan dibuat 1 folder tersendiri. <br/>
+(c)Program akan memindahkan foto ke folder dengan kategori yang sesuai dan di rename dengan nama peliharaan. <br/>
+(d)Dalam satu foto bisa terdapat lebih dari satu peliharaan maka foto harus di pindah ke masing-masing kategori yang sesuai.
+(e)Pada setiap folder dibuat sebuah file "keterangan.txt" yang berisi nama dan umur semua peliharaan dalam folder tersebut.
 
 ### Source Code :
 ``` C
@@ -1011,9 +1007,56 @@ int main()
 }
 ```
 
-### Cara Pengerjaan dan Kendala :
-Berikut adalah fungsi yang kami gunakan :
-1. Fungsi pindah
+### Cara Pengerjaan :
+#### Library
+``` C
+#include <stdio.h>
+
+#include <stdlib.h>
+
+#include <sys/types.h>
+
+#include <unistd.h>
+
+#include <string.h>
+
+#include <dirent.h>
+
+#include <wait.h>
+
+#include <time.h>
+```
+#### 2A
+``` C
+child = fork();
+if (child == 0)
+{
+	char *argv[] = {"unzip", "/home/daniel/Documents/shift2/soal2/pets.zip", "-d","/home/daniel/Documents/shift2/soal2/petshop", NULL};
+	execv("/usr/bin/unzip", argv);
+}
+```
+Fungsi diatas digunakan untuk melakukan unzip dari file pets.zip, kami menggunakan `execv` untuk melakukan unzip.
+``` C
+while ((waitpid(child, &status, 0)) > 0);
+child1 = fork();
+if (child1 == 0)
+{
+	char *argv[] = {"find", "/home/daniel/Documents/shift2/soal2/petshop", "-mindepth", "1", "-type", "d", "-exec", "rm","-r", "{}", "+", NULL};
+	execv("/usr/bin/find", argv);
+}
+```
+Kami menggunakan command `find` untuk menemukan directory yang tidak perlu dan menggunakan `rm` untuk menghapus directory yang tidak perlu.
+#### 2B
+``` C
+ pid_t child2 = fork();
+ if (child2 == 0)
+ {
+   char *argv[] = {"mkdir", "-p", lokasi, NULL};
+   execv("/bin/mkdir", argv);
+ }
+```
+Untuk membuat folder, kami menggunakan command `mkdir` yang dimasukkan ke dalam `execv`
+#### 2C
 ``` C
 void pindah(char *lokasi, char *file, char *nama)
 {
@@ -1085,9 +1128,8 @@ void pindah(char *lokasi, char *file, char *nama)
   }
 }
 ```
-Fungsi ini bertujuan untuk memindahkan file ke folder yang sesuai dengan kategorinya dan juga menulis keterangan nama pada keterangan.txt
-
-2. Fungsi copy
+Untuk memindah file sesuai dengan kategorinya kami membuat fungsi pindah dan menggunakan command `mv` dan melakukan rename dengan strcat.
+#### 2D
 ``` C
 void copy(char *src, char *dest, char *lokasi, char *nama)
 {
@@ -1167,109 +1209,81 @@ void copy(char *src, char *dest, char *lokasi, char *nama)
   }
 }
 ```
-Fungsi ini digunakan untuk melakukan copy file dari source ke destination, serta memasukkan umur hewan ke keterangan.txt
-
-3. Fungsi unzip
+Untuk file yang memiliki 2 atau lebih hewan kami menggunakan command `cp` untuk melakukan copy file
+#### 2E
 ``` C
-child = fork();
-if (child == 0)
+FILE *fptr;
+char st[100];
+char fname[50];
+strcpy(fname, lokasi);
+strcat(fname, "/keterangan.txt");
+fptr = fopen(fname, "a+");
+
+fprintf(fptr, "nama : %s\n", petname);
+fprintf(fptr, "umur : %s tahun\n\n", umur);
+
+fclose(fptr);
+```
+Berikut adalah fungsi yang kami gunakan untuk memasukkan data nama dan umur ke dalam file keterangan.txt.
+
+### Kendala :
+Sebelum membuat code diatas kami sempat mencoba membuat code lain, namun belum bisa memasukkan file sesuai dengan kategorinya.
+``` C
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <string.h>
+
+void makedir(){
+    char *argv[] = {"mkdir", "cat", "dog", "frog", "guinea", "hamster", "iguana", "ilama", "otter", "parrot", "rabbit", "racoon", "sheep", "tiger", "betta", NULL};
+    execvp("bin/unzip", argv);
+    //system ("mkdir cat dog frog guinea hamster iguana ilama otter parrot rabbit racoon sheep tiger betta");
+}
+
+int main(int argc, char* argv[])
 {
-	char *argv[] = {"unzip", "/home/daniel/Documents/shift2/soal2/pets.zip", "-d","/home/daniel/Documents/shift2/soal2/petshop", NULL};
-	execv("/usr/bin/unzip", argv);
+pid_t process_id = 0;
+pid_t sid = 0;
+// Create child process
+process_id = fork();
+// Indication of fork() failure
+if (process_id < 0)
+{
+printf("fork failed!\n");
+// Return failure in exit status
+exit(1);
+}
+// PARENT PROCESS. Need to kill it.
+if (process_id > 0)
+{
+printf("process_id of child process %d \n", process_id);
+// return success in exit status
+exit(0);
+}
+//unmask the file mode
+umask(0);
+//set new session
+sid = setsid();
+if(sid < 0)
+{
+// Return failure
+exit(1);
+}
+// Change the current working directory to root.
+
+while (1)
+{
+    pid_t id;
+    system("unzip pets.zip -d pet");
+    chdir ("pet");
+    makedir();
+}
+
+return (0);
 }
 ```
-Fungsi ini digunakan untuk melakukan unzip pada pets.zip
-
-4. Fungsi find
-``` C
-while ((waitpid(child, &status, 0)) > 0);
-child1 = fork();
-if (child1 == 0)
-{
-	char *argv[] = {"find", "/home/daniel/Documents/shift2/soal2/petshop", "-mindepth", "1", "-type", "d", "-exec", "rm","-r", "{}", "+", NULL};
-	execv("/usr/bin/find", argv);
-}
-```
-Fungsi ini digunakan untuk menemukan file-file yang ada dalam folder petshop
-
-5. Fungsi menentukan destination dari tiap file
-``` C
-while ((waitpid(child1, &status, 0)) > 0)
-    ;
-child2 = fork();
-if (child2 == 0)
-{
-    DIR *dp;
-    struct dirent *ep;
-    char path[] = {"/home/daniel/Documents/shift2/soal2/petshop"};
-
-    dp = opendir(path);
-
-    if (dp != NULL)
-    {
-    while ((ep = readdir(dp)))
-    {
-        //puts(ep->d_name);
-
-        char str[100];
-
-        char new[100];
-        memset(str, 0, sizeof(str));
-        memset(new, 0, sizeof(new));
-        strcpy(str, ep->d_name);
-
-        if (ep->d_name[0] != '.')
-        {
-        int i = 0;
-
-        while (str[i] != ';')
-        {
-            new[i] = str[i];
-            i++;
-            if (str[i] == ';')
-            {
-            break;
-            }
-        }
-        i = 0;
-        char lokasi[100] = {"/home/daniel/Documents/shift2/soal2/petshop/"};
-        char file[100] = {"/home/daniel/Documents/shift2/soal2/petshop/"};
-
-        strcat(lokasi, new);
-        strcat(file, ep->d_name);
-        if (strchr(str, '_') != NULL)
-        {
-
-            char file[100];
-            strcpy(file, str);
-            char *file2 = strtok(file, "_");
-            file2 = strtok(NULL, "_");
-            char fol2[100];
-            strcpy(fol2, file2);
-            char *folder2 = strtok(fol2, ";");
-
-            char src[100] = {"/home/daniel/Documents/shift2/soal2/petshop/"};
-            char src2[100] = {"/home/daniel/Documents/shift2/soal2/petshop/"};
-            char dest[100] = {"/home/daniel/Documents/shift2/soal2/petshop/"};
-            strcat(src, str);
-            strcat(dest, file2);
-            strcat(src2, folder2);
-
-            copy(src, dest, src2, file2);
-
-        }
-
-        pindah(lokasi, file, ep->d_name);
-        }
-    }
-
-    (void)closedir(dp);
-    }
-    else
-    perror("Couldn't open the directory");
-}
-```
-Fungsi ini digunakan untuk memasukkan lokasi awal file ke folder akhirnya, dan pada fungsi ini juga akan dipanggil fungsi pindah.
 
 ### Hasil Run :
 Berikut adalah hasil run dari program kami <br/>
