@@ -719,7 +719,7 @@ int main()
 
 }
 ```
-Namun terjadi kendala pada fungsi waktu yang tidak berjalan, sehingga kamu membuat dalam setiap percabangan variabel seconds dan seconds2 kurang dari 0, dimana seharusnya sama dengan 0. 
+Namun terjadi kendala pada fungsi waktu yang tidak berjalan, sehingga kami membuat dalam setiap percabangan variabel seconds dan seconds2 kurang dari 0, dimana seharusnya sama dengan 0. 
 
 ## Nomor 2 :
 ### Soal :
